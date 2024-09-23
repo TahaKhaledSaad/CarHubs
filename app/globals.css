@@ -15,6 +15,33 @@ Tailwind Directives:
   font-family: "Manrope", sans-serif;
 }
 
+/* Scrollbar Style */
+* {
+  --sb-track-color: #dae2ff;
+  --sb-thumb-color: #2c5affb8;
+  --sb-size: 14px;
+}
+
+*::-webkit-scrollbar {
+  width: var(--sb-size);
+}
+
+*::-webkit-scrollbar-track {
+  background: var(--sb-track-color);
+  /* border-radius: 3px; */
+}
+
+*::-webkit-scrollbar-thumb {
+  background: var(--sb-thumb-color);
+  /* border-radius: 3px; */
+}
+
+@supports not selector(::-webkit-scrollbar) {
+  body {
+    scrollbar-color: var(--sb-thumb-color) var(--sb-track-color);
+  }
+}
+
 body {
   @apply overflow-x-hidden;
 }
