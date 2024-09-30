@@ -3,7 +3,6 @@ import CustomButton from "./CustomButton";
 import Navbar from "./Navbar";
 import Footer from "./Footer";
 import Logo from "./Logo";
-import CarCatalgue from "./CarCatalgue";
 import SearchBar from "./SearchBar";
 import CustomFilter from "./CustomFilter";
 import SearchManufacturer from "./SearchManufacturer";
@@ -17,7 +16,6 @@ export {
   Navbar,
   Footer,
   Logo,
-  CarCatalgue,
   SearchBar,
   CustomFilter,
   SearchManufacturer,

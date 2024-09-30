@@ -50,3 +50,22 @@ export interface FilterProps {
   limit: number;
   model: string;
 }
+
+// 5. Option Interface
+export interface OptionProps {
+  title: string;
+  value: string;
+}
+
+// 6. Years Interface
+export interface YearsProps {
+  title: string;
+  value: string;
+}
+
+// 7. Custom Filter Interface
+export interface CustomFilterProps {
+  title: string;
+  options?: OptionProps[];
+  years?: YearsProps[];
+}
