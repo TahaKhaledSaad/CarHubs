@@ -16,11 +16,7 @@ export default function Home({ searchParams }: any) {
           <SearchBar />
 
           <div className="home__filter-container">
-            <CustomFilter
-              title="fuel"
-              options={fuels}
-              years={yearsOfProduction}
-            />
+            <CustomFilter title="fuel" />
             <CustomFilter title="year" />
           </div>
         </div>

@@ -69,3 +69,8 @@ export interface CustomFilterProps {
   options?: OptionProps[];
   years?: YearsProps[];
 }
+
+// 8. Any String Prop Interface
+export interface IStringProp {
+  title: string;
+}
