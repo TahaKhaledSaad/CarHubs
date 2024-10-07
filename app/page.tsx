@@ -1,5 +1,4 @@
 import { Cars, CustomFilter, Hero, SearchBar } from "@/components";
-import { fuels, yearsOfProduction } from "@/constants";
 
 export default function Home({ searchParams }: any) {
   return (

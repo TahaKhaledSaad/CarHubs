@@ -74,3 +74,9 @@ export interface CustomFilterProps {
 export interface IStringProp {
   title: string;
 }
+
+//9. ShowMore Props Interface
+export interface ShowMoreProps {
+  pageNumber: number;
+  isNext: boolean;
+}

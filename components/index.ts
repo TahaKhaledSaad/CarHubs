@@ -9,6 +9,7 @@ import SearchManufacturer from "./SearchManufacturer";
 import Cars from "./Cars";
 import CarCard from "./CarCard";
 import CarDetails from "./CarDetails";
+import ShowMore from "./ShowMore";
 
 export {
   Hero,
@@ -22,4 +23,5 @@ export {
   Cars,
   CarCard,
   CarDetails,
+  ShowMore,
 };

@@ -70,7 +70,11 @@ const CustomFilter = ({ title }: IStringProp) => {
         <div className="relative w-fit z-10">
           <ListboxButton className="custom-filter__btn">
             <span className="block truncate">
-              {selected ? selected.title : "Select an option"}
+              {selected
+                ? selected.value !== ""
+                  ? selected.value
+                  : selected.title
+                : "Select an option"}
             </span>
             <Image
               src="/chevron-up-down.svg"
