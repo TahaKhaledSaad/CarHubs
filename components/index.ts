@@ -9,7 +9,7 @@ import SearchManufacturer from "./SearchManufacturer";
 import Cars from "./Cars";
 import CarCard from "./CarCard";
 import CarDetails from "./CarDetails";
-import ShowMore from "./ShowMore";
+import ShowCount from "./ShowCount";
 
 export {
   Hero,
@@ -23,5 +23,5 @@ export {
   Cars,
   CarCard,
   CarDetails,
-  ShowMore,
+  ShowCount,
 };

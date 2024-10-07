@@ -1,6 +1,6 @@
 import { fetchCars } from "@/utils";
 import React from "react";
-import { CarCard, ShowMore } from "@/components";
+import { CarCard, ShowCount } from "@/components";
 
 async function Cars({ searchParams }: any) {
   const allCars = await fetchCars({
@@ -26,10 +26,23 @@ async function Cars({ searchParams }: any) {
               <CarCard car={car} key={car.id} />
             ))}
           </div>
-          <ShowMore
-            pageNumber={(searchParams.limit || 10) / 10}
-            isNext={(searchParams.limit || 10) < allCars.length}
-          />
+          <div
+            className={`flex justify-center w-fit bg-[#dae2ff] mx-auto  rounded-full mt-10 p-2 ${
+              allCars.length > 10 ? "gap-5" : ""
+            }`}
+          >
+            <ShowCount
+              pageNumber={(searchParams.limit || 10) / 10}
+              isNext={(searchParams.limit || 10) < allCars.length}
+              actionType="less"
+            />
+
+            <ShowCount
+              pageNumber={(searchParams.limit || 10) / 10}
+              isNext={(searchParams.limit || 10) < allCars.length}
+              actionType="more"
+            />
+          </div>
         </section>
       ) : (
         <div className="home__error-container">
