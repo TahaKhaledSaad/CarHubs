@@ -13,12 +13,15 @@ function ShowCount({ pageNumber, isNext, actionType }: ShowButtonProps) {
   const router = useRouter();
 
   const handleNavigation = () => {
+    const scrollPos = window.scrollY;
+
     const newLimit =
       actionType === "more"
         ? (pageNumber + 1) * 10
         : Math.max((pageNumber - 1) * 10, 10); // Ensure limit doesn't go below 10
     const newPathName = updateSearchParams("limit", `${newLimit}`);
     router.push(newPathName);
+    window.scrollTo(0, scrollPos);
   };
 
   return (

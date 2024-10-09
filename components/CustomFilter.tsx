@@ -50,12 +50,15 @@ const CustomFilter = ({ title }: IStringProp) => {
   const [selected, setSelected] = useState(loopedArray[0]);
 
   function handleUpdateParams(e: { title: string; value: string }) {
+    const scrollPos = window.scrollY;
     const newPathName = updateSearchParams(
       e.title.toLowerCase() === "fuel" ? "fuel" : "year",
       e.value.toLowerCase()
     );
 
     router.push(newPathName);
+
+    window.scrollTo(0, scrollPos);
   }
 
   return (
