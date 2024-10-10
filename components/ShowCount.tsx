@@ -1,5 +1,6 @@
 "use client";
 
+import { Suspense } from "react";
 import { ShowMoreProps } from "@/types";
 import { useRouter, useSearchParams } from "next/navigation";
 import CustomButton from "./CustomButton";
@@ -41,24 +42,26 @@ function ShowCount({ pageNumber, isNext, actionType }: ShowButtonProps) {
   };
 
   return (
-    <div>
-      {actionType === "more" && !isNext && (
-        <CustomButton
-          title="Show More"
-          btnType="button"
-          handleClick={handleNavigation}
-          containerStyles="bg-primary-blue rounded-full text-white"
-        />
-      )}
-      {actionType === "less" && pageNumber > 1 && (
-        <CustomButton
-          title="Show Less"
-          btnType="button"
-          handleClick={handleNavigation}
-          containerStyles="bg-primary-blue rounded-full text-white"
-        />
-      )}
-    </div>
+    <Suspense fallback={<div>Loading...</div>}>
+      <div>
+        {actionType === "more" && !isNext && (
+          <CustomButton
+            title="Show More"
+            btnType="button"
+            handleClick={handleNavigation}
+            containerStyles="bg-primary-blue rounded-full text-white"
+          />
+        )}
+        {actionType === "less" && pageNumber > 1 && (
+          <CustomButton
+            title="Show Less"
+            btnType="button"
+            handleClick={handleNavigation}
+            containerStyles="bg-primary-blue rounded-full text-white"
+          />
+        )}
+      </div>
+    </Suspense>
   );
 }
 

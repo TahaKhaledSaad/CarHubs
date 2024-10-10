@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, Suspense } from "react";
 import Image from "next/image";
 import {
   Listbox,
@@ -57,55 +57,57 @@ const CustomFilter = ({ title }: IStringProp) => {
   }
 
   return (
-    <div className="w-fit">
-      <Listbox
-        value={selected}
-        onChange={(e) => {
-          setSelected(e);
-          handleUpdateParams(e);
-        }}
-      >
-        <div className="relative w-fit z-10">
-          <ListboxButton className="custom-filter__btn">
-            <span className="block truncate">
-              {selected.value !== "" ? selected.value : selected.title}
-            </span>
-            <Image
-              src="/chevron-up-down.svg"
-              width={20}
-              height={20}
-              alt="Chevron Up Down"
-            />
-          </ListboxButton>
-          <Transition
-            as="div"
-            leave="transition ease-in duration-100"
-            leaveFrom="opacity-100"
-            leaveTo="opacity-0"
-          >
-            <ListboxOptions className="custom-filter__options">
-              {loopedArray.map((option) => (
-                <ListboxOption
-                  key={option.value}
-                  value={option}
-                  className="cursor-pointer select-none relative py-2 px-4 data-[focus]:text-white data-[focus]:bg-[#2d5bff]"
-                >
-                  {({ selected }) => (
-                    <span
-                      className={`${
-                        selected ? "font-medium" : "font-normal"
-                      } block truncate`}
-                    >
-                      {option.value !== "" ? option.value : option.title}
-                    </span>
-                  )}
-                </ListboxOption>
-              ))}
-            </ListboxOptions>
-          </Transition>
-        </div>
-      </Listbox>
-    </div>
+    <Suspense fallback={<div>Loading...</div>}>
+      <div className="w-fit">
+        <Listbox
+          value={selected}
+          onChange={(e) => {
+            setSelected(e);
+            handleUpdateParams(e);
+          }}
+        >
+          <div className="relative w-fit z-10">
+            <ListboxButton className="custom-filter__btn">
+              <span className="block truncate">
+                {selected.value !== "" ? selected.value : selected.title}
+              </span>
+              <Image
+                src="/chevron-up-down.svg"
+                width={20}
+                height={20}
+                alt="Chevron Up Down"
+              />
+            </ListboxButton>
+            <Transition
+              as="div"
+              leave="transition ease-in duration-100"
+              leaveFrom="opacity-100"
+              leaveTo="opacity-0"
+            >
+              <ListboxOptions className="custom-filter__options">
+                {loopedArray.map((option) => (
+                  <ListboxOption
+                    key={option.value}
+                    value={option}
+                    className="cursor-pointer select-none relative py-2 px-4 data-[focus]:text-white data-[focus]:bg-[#2d5bff]"
+                  >
+                    {({ selected }) => (
+                      <span
+                        className={`${
+                          selected ? "font-medium" : "font-normal"
+                        } block truncate`}
+                      >
+                        {option.value !== "" ? option.value : option.title}
+                      </span>
+                    )}
+                  </ListboxOption>
+                ))}
+              </ListboxOptions>
+            </Transition>
+          </div>
+        </Listbox>
+      </div>
+    </Suspense>
   );
 };
 

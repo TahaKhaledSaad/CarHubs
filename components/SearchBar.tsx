@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useState, Suspense } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
 import { SearchManufacturer } from "@/components";
 import Image from "next/image";
@@ -57,37 +57,39 @@ function SearchBar() {
   };
 
   return (
-    <form className="searchbar" onSubmit={handleSearch}>
-      <div className="searchbar__item">
-        <SearchManufacturer
-          manufacturer={manufacturer}
-          setManufacturer={setManufacturer}
-        />
-        <SearchButton otherClasses="sm:hidden" />
-      </div>
+    <Suspense fallback={<div>Loading...</div>}>
+      <form className="searchbar" onSubmit={handleSearch}>
+        <div className="searchbar__item">
+          <SearchManufacturer
+            manufacturer={manufacturer}
+            setManufacturer={setManufacturer}
+          />
+          <SearchButton otherClasses="sm:hidden" />
+        </div>
 
-      <div className="searchbar__item">
-        <Image
-          src="/model-icon.png"
-          alt="model"
-          width={25}
-          height={25}
-          className="absolute w-[20px] h-[20px] ml-4"
-        />
-        <input
-          type="text"
-          name="model"
-          value={model}
-          onChange={(e) => setModel(e.target.value)}
-          placeholder="Tiguan..."
-          className="searchbar__input"
-        />
-        <SearchButton otherClasses="sm:hidden" />
-      </div>
-      <SearchButton otherClasses="max-sm:hidden" />
+        <div className="searchbar__item">
+          <Image
+            src="/model-icon.png"
+            alt="model"
+            width={25}
+            height={25}
+            className="absolute w-[20px] h-[20px] ml-4"
+          />
+          <input
+            type="text"
+            name="model"
+            value={model}
+            onChange={(e) => setModel(e.target.value)}
+            placeholder="Tiguan..."
+            className="searchbar__input"
+          />
+          <SearchButton otherClasses="sm:hidden" />
+        </div>
+        <SearchButton otherClasses="max-sm:hidden" />
 
-      <ToastContainer position="top-right" hideProgressBar autoClose={1000} />
-    </form>
+        <ToastContainer position="top-right" hideProgressBar autoClose={1000} />
+      </form>
+    </Suspense>
   );
 }
 
