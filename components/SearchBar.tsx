@@ -1,11 +1,9 @@
 "use client";
 
 import React, { useState } from "react";
-import { useRouter } from "next/navigation";
-
+import { useRouter, useSearchParams } from "next/navigation";
 import { SearchManufacturer } from "@/components";
 import Image from "next/image";
-
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
@@ -13,9 +11,10 @@ function SearchBar() {
   const [manufacturer, setManufacturer] = useState("");
   const [model, setModel] = useState("");
   const router = useRouter();
+  const searchParams = useSearchParams(); // Move this hook to the top level
 
   const SearchButton = ({ otherClasses }: { otherClasses: string }) => (
-    <button type="submit" className={`-ml-3 z-10 ${otherClasses}`}>
+    <button type="submit" className={`ml-3 z-10 ${otherClasses}`}>
       <Image
         src="/magnifying-glass.svg"
         alt="magnifying glass"
@@ -37,25 +36,24 @@ function SearchBar() {
   };
 
   const updateSearchParams = (model: string, manufacturer: string) => {
-    const searchParams = new URLSearchParams(window.location.search);
+    const newSearchParams = new URLSearchParams(searchParams.toString());
 
     if (model) {
-      searchParams.set("model", model);
+      newSearchParams.set("model", model);
     } else {
-      searchParams.delete("model");
+      newSearchParams.delete("model");
     }
 
     if (manufacturer) {
-      searchParams.set("manufacturer", manufacturer);
+      newSearchParams.set("manufacturer", manufacturer);
     } else {
-      searchParams.delete("manufacturer");
+      newSearchParams.delete("manufacturer");
     }
 
-    const newPahthName = `${
+    const newPathName = `${
       window.location.pathname
-    }?${searchParams.toString()}`;
-
-    router.push(newPahthName);
+    }?${newSearchParams.toString()}`;
+    router.push(newPathName, { scroll: false });
   };
 
   return (
@@ -86,7 +84,7 @@ function SearchBar() {
         />
         <SearchButton otherClasses="sm:hidden" />
       </div>
-      <SearchButton otherClasses="max-sm-hidden" />
+      <SearchButton otherClasses="max-sm:hidden" />
 
       <ToastContainer position="top-right" hideProgressBar autoClose={1000} />
     </form>

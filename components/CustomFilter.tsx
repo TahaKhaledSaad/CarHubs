@@ -10,8 +10,8 @@ import {
   Transition,
 } from "@headlessui/react";
 import { IStringProp } from "@/types";
-import { useRouter } from "next/navigation";
-import { updateSearchParams } from "@/utils";
+import { useRouter, useSearchParams } from "next/navigation";
+// import { updateSearchParams } from "@/utils";
 
 const yearsOfProduction = [
   { title: "Year", value: "" },
@@ -27,38 +27,33 @@ const yearsOfProduction = [
 ];
 
 const fuels = [
-  {
-    title: "Fuel",
-    value: "",
-  },
-  {
-    title: "Fuel",
-    value: "Gas",
-  },
-  {
-    title: "Fuel",
-    value: "Electricity",
-  },
+  { title: "Fuel Type", value: "" }, // Updated placeholder title
+  { title: "Gas", value: "Gas" }, // Clear distinction between title and value
+  { title: "Electricity", value: "Electricity" },
 ];
 
 const CustomFilter = ({ title }: IStringProp) => {
-  //
   const router = useRouter();
+  const searchParams = useSearchParams();
 
+  // Dynamically decide between years and fuels
   const loopedArray = title === "year" ? yearsOfProduction : fuels;
 
   const [selected, setSelected] = useState(loopedArray[0]);
 
   function handleUpdateParams(e: { title: string; value: string }) {
-    const scrollPos = window.scrollY;
-    const newPathName = updateSearchParams(
-      e.title.toLowerCase() === "fuel" ? "fuel" : "year",
-      e.value.toLowerCase()
-    );
+    const newSearchParams = new URLSearchParams(searchParams.toString());
 
-    router.push(newPathName);
+    if (title === "fuel") {
+      newSearchParams.set("fuel_type", e.value.toLowerCase());
+    } else if (title === "year") {
+      newSearchParams.set("year", e.value);
+    }
 
-    window.scrollTo(0, scrollPos);
+    const newPathName = `${
+      window.location.pathname
+    }?${newSearchParams.toString()}`;
+    router.push(newPathName, { scroll: false });
   }
 
   return (
@@ -73,11 +68,7 @@ const CustomFilter = ({ title }: IStringProp) => {
         <div className="relative w-fit z-10">
           <ListboxButton className="custom-filter__btn">
             <span className="block truncate">
-              {selected
-                ? selected.value !== ""
-                  ? selected.value
-                  : selected.title
-                : "Select an option"}
+              {selected.value !== "" ? selected.value : selected.title}
             </span>
             <Image
               src="/chevron-up-down.svg"
@@ -97,7 +88,7 @@ const CustomFilter = ({ title }: IStringProp) => {
                 <ListboxOption
                   key={option.value}
                   value={option}
-                  className="cursor-pointer select-none relative py-2 px-4 data-[focus]:text-white data-[focus]:bg-[#2d5bff] "
+                  className="cursor-pointer select-none relative py-2 px-4 data-[focus]:text-white data-[focus]:bg-[#2d5bff]"
                 >
                   {({ selected }) => (
                     <span
@@ -105,7 +96,7 @@ const CustomFilter = ({ title }: IStringProp) => {
                         selected ? "font-medium" : "font-normal"
                       } block truncate`}
                     >
-                      {option.value === "" ? option.title : option.value}
+                      {option.value !== "" ? option.value : option.title}
                     </span>
                   )}
                 </ListboxOption>

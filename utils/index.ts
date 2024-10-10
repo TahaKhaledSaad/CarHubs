@@ -1,5 +1,24 @@
 import { CarProps, FilterProps } from "@/types";
 
+// export async function fetchCars(filters: FilterProps) {
+//   const { manufacturer, year, fuel, limit, model } = filters;
+//   const headers = {
+//     "x-rapidapi-key": "0967cb9f05msh19404c9fb2d34fap150855jsn9b0564b7e764",
+//     "x-rapidapi-host": "cars-by-api-ninjas.p.rapidapi.com",
+//   };
+
+//   const response = await fetch(
+//     `https://cars-by-api-ninjas.p.rapidapi.com/v1/cars?make=${manufacturer}&year=${year}&model=${model}&limit=${limit}&fuel_type=${fuel}`,
+//     {
+//       headers: headers,
+//     }
+//   );
+
+//   const data = await response.json();
+
+//   return data;
+// }
+
 export async function fetchCars(filters: FilterProps) {
   const { manufacturer, year, fuel, limit, model } = filters;
   const headers = {
@@ -7,15 +26,19 @@ export async function fetchCars(filters: FilterProps) {
     "x-rapidapi-host": "cars-by-api-ninjas.p.rapidapi.com",
   };
 
-  const response = await fetch(
-    `https://cars-by-api-ninjas.p.rapidapi.com/v1/cars?make=${manufacturer}&year=${year}&mode=${model}&limit=${limit}&fuel_type=${fuel}`,
-    {
-      headers: headers,
-    }
-  );
+  // Build query string dynamically
+  let queryString = `https://cars-by-api-ninjas.p.rapidapi.com/v1/cars?make=${manufacturer}&year=${year}&model=${model}&limit=${limit}`;
+
+  // Only add fuel_type if it's defined and not an empty string
+  if (fuel && fuel !== "") {
+    queryString += `&fuel_type=${fuel}`;
+  }
+
+  const response = await fetch(queryString, {
+    headers: headers,
+  });
 
   const data = await response.json();
-
   return data;
 }
 
@@ -45,7 +68,7 @@ export const generateCarImageUrl = (car: CarProps, angle?: string) => {
   return `${url}`;
 };
 
-export const updateSearchParams = (type: string, value: string) => {
+export const updateSearchParam = (type: string, value: string) => {
   const searchParams = new URLSearchParams(window.location.search);
 
   if (value) {
@@ -57,4 +80,20 @@ export const updateSearchParams = (type: string, value: string) => {
   const newPahthName = `${window.location.pathname}?${searchParams.toString()}`;
 
   return newPahthName;
+};
+
+export const updateMoreSearchParam = (params: { [key: string]: string }) => {
+  const searchParams = new URLSearchParams(window.location.search);
+
+  Object.entries(params).forEach(([key, value]) => {
+    if (value) {
+      searchParams.set(key, value);
+    } else {
+      searchParams.delete(key);
+    }
+  });
+
+  const newPathName = `${window.location.pathname}?${searchParams.toString()}`;
+
+  return newPathName;
 };

@@ -46,8 +46,8 @@ function CarCard({ car }: CarCardProps) {
 
       <div className="relative w-full h-40 my-3 object-contain">
         <Image
-          src={`/car-${Math.floor(Math.random() * 15) + 1}.png`}
-          // src={generateCarImageUrl(car)}  // Not Working: cause Api key is not valid
+          // src={`/car-${Math.floor(Math.random() * 15) + 1}.png`}
+          src={generateCarImageUrl(car)} // Not Working: cause Api key is not valid
           alt="Car Model"
           fill
           priority
